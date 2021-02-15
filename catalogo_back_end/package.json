@@ -1,0 +1,23 @@
+{
+  "name": "catalogo_back_end",
+  "version": "1.0.0",
+  "description": "",
+  "main": "dist/index.js",
+  "scripts": {
+    "start": "nodemon dist/index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Eduardo Garcia",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.17.1",
+    "sequelize": "^6.5.0",
+    "sqlite3": "^5.0.1"
+  },
+  "devDependencies": {
+    "@types/express": "^4.17.11",
+    "@types/node": "^14.14.27",
+    "@types/sequelize": "^4.28.9",
+    "@types/sqlite3": "^3.1.7"
+  }
+}

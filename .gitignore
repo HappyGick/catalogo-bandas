@@ -1,0 +1,50 @@
+# See http://help.github.com/ignore-files/ for more about ignoring files.
+
+# compiled output
+catalogo-front-end/dist
+catalogo_back_end/dist
+catalogo-front-end/tmp
+catalogo-front-end/out-tsc
+# Only exists if Bazel was run
+catalogo-front-end/bazel-out
+
+# dependencies
+catalogo-front-end/node_modules
+catalogo_back_end/node_modules
+
+# profiling files
+catalogo-front-end/chrome-profiler-events*.json
+catalogo-front-end/speed-measure-plugin*.json
+
+# IDEs and editors
+catalogo-front-end/.idea
+catalogo-front-end/.project
+catalogo-front-end/.classpath
+catalogo-front-end/.c9/
+catalogo-front-end/*.launch
+catalogo-front-end/.settings/
+catalogo-front-end/*.sublime-workspace
+
+# IDE - VSCode
+catalogo-front-end/.vscode/*
+!catalogo-front-end/.vscode/settings.json
+!catalogo-front-end/.vscode/tasks.json
+!catalogo-front-end/.vscode/launch.json
+!catalogo-front-end/.vscode/extensions.json
+catalogo-front-end/.history/*
+
+# misc
+catalogo-front-end/.sass-cache
+catalogo-front-end/connect.lock
+catalogo-front-end/coverage
+catalogo-front-end/libpeerconnection.log
+catalogo-front-end/npm-debug.log
+catalogo-front-end/yarn-error.log
+catalogo-front-end/testem.log
+catalogo-front-end/typings
+
+# System Files
+catalogo-front-end/.DS_Store
+catalogo-front-end/Thumbs.db
+
+catalogo_back_end/genrelist.txt
