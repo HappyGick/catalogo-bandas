@@ -1,5 +1,5 @@
 import express from 'express';
-import userRoutes from './routes/user';
+import catalogRoutes from './routes/catalog';
 import { InitializeDatabases } from './modules/database/database';
 const app = express();
 const port = 5000;
@@ -14,7 +14,7 @@ app.use((req: any, res: any, next: any) => {
     next();
 });
 
-app.use('/user', userRoutes);
+app.use('/catalog', catalogRoutes);
 
 InitializeDatabases().then(() => app.listen(port, async () => { 
     console.log(`Running on port ${port}`);

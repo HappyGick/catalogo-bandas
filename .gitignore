@@ -2,7 +2,7 @@
 
 # compiled output
 catalogo-front-end/dist
-catalogo_back_end/dist
+catalogo-back-end/dist
 catalogo-front-end/tmp
 catalogo-front-end/out-tsc
 # Only exists if Bazel was run
@@ -10,7 +10,7 @@ catalogo-front-end/bazel-out
 
 # dependencies
 catalogo-front-end/node_modules
-catalogo_back_end/node_modules
+catalogo-back-end/node_modules
 
 # profiling files
 catalogo-front-end/chrome-profiler-events*.json
@@ -47,4 +47,4 @@ catalogo-front-end/typings
 catalogo-front-end/.DS_Store
 catalogo-front-end/Thumbs.db
 
-catalogo_back_end/genrelist.txt
+catalogo-back-end/genrelist.txt
