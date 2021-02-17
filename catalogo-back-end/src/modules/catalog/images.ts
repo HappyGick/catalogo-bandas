@@ -1,6 +1,10 @@
 import fs from 'fs';
 import crypto from 'crypto';
 
+export function imageExists(id: string): boolean {
+    return fs.existsSync('./db/images/' + id + '.jpg');
+}
+
 export function fetchImageById(id: string): Buffer {
     return fs.readFileSync('./db/images/' + id + '.jpg');
 }
