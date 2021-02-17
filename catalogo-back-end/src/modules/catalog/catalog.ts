@@ -72,6 +72,20 @@ export async function deleteBand(id: number) {
     (bandItemRow)?.destroy();
 }
 
+export async function getAllGenres(): Promise<SQLRows<string>> {
+    let dblist = await Genres.findAll();
+
+    let parsedlist: SQLRows<string> = {};
+
+    let len = dblist.length;
+    for(let i = 0; i < len; ++i) {
+        let item = dblist[i].get();
+        parsedlist[item.Id] = item.Name;
+    }
+
+    return parsedlist;
+}
+
 async function getGenre(id: number): Promise<string> {
     return (await Genres.findByPk(id))?.get().Name
 }

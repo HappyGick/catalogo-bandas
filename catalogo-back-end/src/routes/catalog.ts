@@ -1,13 +1,23 @@
 import express from 'express';
 import { BandDetail } from '../interfaces/catalog';
 import { BandDetailRequestTemplate } from '../interfaces/requests';
-import { addBand, deleteBand, getBandDetail, getBandList } from '../modules/catalog/catalog';
+import { addBand, deleteBand, getAllGenres, getBandDetail, getBandList } from '../modules/catalog/catalog';
 import { fetchImageById, imageExists, uploadImage } from '../modules/catalog/images';
 
 const router = express.Router();
 
 router.get('/test', (req, res) => {
     res.send('success');
+});
+
+router.get('/get-genre-list', async (req, res) => {
+    try {
+        let list = await getAllGenres();
+        res.status(200).send({"genre_list": list});
+    } catch (e) {
+        console.log(e);
+        res.status(500).send("error: check logs");
+    }
 });
 
 router.get('/get-list', async (req, res) => {
