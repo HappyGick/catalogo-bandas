@@ -4,6 +4,7 @@ import { arrayToSqlStringList, sqlNumberListToArray, sqlStringListToArray } from
 import { Bands } from "../database/models/Bands";
 import { Bands_Min } from "../database/models/Bands_Min";
 import { Genres } from "../database/models/Genres";
+import { deleteImage } from "./images";
 
 export async function getBandList(): Promise<SQLRows<BandItem>> {
     let dblist = await Bands_Min.findAll();
@@ -38,12 +39,37 @@ export async function getBandDetail(id: number): Promise<BandDetail> {
     }
 }
 
-export function addBand(band: BandDetail) {
+export async function addBand(band: BandDetail): Promise<BandDetail> {
+    let newband = {
+        Name: band.name,
+        Genres: await toGenreSqlList(band.genres),
+        Active: band.active,
+        Members: arrayToSqlStringList(band.members),
+        Samplevids: arrayToSqlStringList(band.samplevids),
+        imgid: band.imgid,
+        Exmembers: arrayToSqlStringList(band.exmembers)
+    }
 
+    let bandDetailRow = await Bands.create(newband);
+    await Bands_Min.create({
+        Name: band.name,
+        imgid: band.imgid
+    });
+
+    band.id = bandDetailRow.get().Id;
+    return band;
 }
 
-export function deleteBand(id: number) {
-
+export async function deleteBand(id: number) {
+    let bandItemRow = await Bands_Min.findByPk(id);
+    let imgid = bandItemRow?.get().imgid;
+    
+    if(imgid !== '') {
+        deleteImage(imgid);
+    }
+    
+    (await Bands.findByPk(id))?.destroy();
+    (bandItemRow)?.destroy();
 }
 
 async function getGenre(id: number): Promise<string> {

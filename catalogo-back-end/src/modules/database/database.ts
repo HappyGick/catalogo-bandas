@@ -11,7 +11,7 @@ export async function InitializeDatabases() {
         init_bands_min(catalogDb);
         init_genres(catalogDb);
         await catalogDb.sync();
-        console.log('Successfully initialized the database instances.');
+        console.log('Successfully initialized the database.');
     } catch (e) {
         console.log(e);
     }

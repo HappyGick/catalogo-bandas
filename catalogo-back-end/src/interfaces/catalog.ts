@@ -5,7 +5,7 @@ export interface BandItem {
 }
 
 export interface BandDetail {
-    id: number,
+    id?: number,
     name: string,
     genres: string[],
     active: string,
