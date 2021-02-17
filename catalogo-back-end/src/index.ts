@@ -1,8 +1,11 @@
 import express from 'express';
+import bodyParser from 'body-parser';
 import catalogRoutes from './routes/catalog';
 import { InitializeDatabases } from './modules/database/database';
 const app = express();
 const port = 5000;
+
+app.use(bodyParser.json());
 
 app.use((req: any, res: any, next: any) => {
     res.header('Access-Control-Allow-Origin', '*');
