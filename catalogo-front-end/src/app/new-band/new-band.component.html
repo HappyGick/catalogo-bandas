@@ -2,35 +2,46 @@
 <h1 style="box-sizing: border-box; text-align: center;">Añadir nueva banda</h1><br>
 <div class="new-band-form-container">
     <div class="form-container-1">
-        <div class="add-image">
+        <div class="add-image" (click)="openImageFile()">
             <h3>Añadir imagen</h3>
+            <input type="file" style="display:none" (change)="handle_image($event)" accept=".jpg,.jpeg">
         </div>
     </div>
     <div class="form-container-2">
         <label for="input_1">Nombre: </label><br>
-        <input type="text" class="input-field" id="input_1"><br><br>
-        <div id="genres-field">
+        <input type="text" class="input-field" id="input_1" [(ngModel)]="bandRequest.name"><br><br>
+        <div class="genres-field">
             <label for="input_genres_1">Géneros: </label><br>
-            <input type="text" class="input-field" id="input_genres_1">
-            <button class="add-button">+</button><br>
+            <div *ngFor="let i of genres_inputs">
+                <select class="input-field" id="{{i}}" [(ngModel)]="bandRequest.genres[genres_inputs.indexOf(i)]">
+                    <option *ngFor="let j of genres_list" [value]="j">{{j}}</option>
+                </select><br>
+            </div><br>
+            <button class="add-button" (click)="add_input_text('genres')">+ Añadir</button><br>
         </div><br><br>
         <label for="input_3">Años activa: </label><br>
-        <input type="text" class="input-field" id="input_3"><br><br>
-        <div id="members-field">
+        <input type="text" class="input-field" id="input_3" [(ngModel)]="bandRequest.active"><br><br>
+        <div class="members-field">
             <label for="input_4">Miembros: </label><br>
-            <input type="text" class="input-field" id="input_4">
-            <button class="add-button">+</button><br>
+            <div *ngFor="let i of members_inputs">
+                <input type="text" class="input-field" id="{{i}}" [(ngModel)]="bandRequest.members[members_inputs.indexOf(i)]"><br>
+            </div><br>
+            <button class="add-button" (click)="add_input_text('members')">+ Añadir</button><br>
         </div><br><br>
-        <div id="demo-field">
+        <div class="demo-field">
             <label for="input_5">Videos de demostración: </label><br>
-            <input type="text" class="input-field" id="input_5">
-            <button class="add-button">+</button><br>
+            <div *ngFor="let i of demos_inputs">
+                <input type="text" class="input-field" id="{{i}}" [(ngModel)]="bandRequest.samplevids[demos_inputs.indexOf(i)]"><br>
+            </div><br>
+            <button class="add-button" (click)="add_input_text('demos')">+ Añadir</button><br>
         </div><br><br>
-        <div id="exmembers-field">
+        <div class="exmembers-field">
             <label for="input_6">Exmiembros: </label><br>
-            <input type="text" class="input-field" id="input_6">
-            <button class="add-button">+</button><br>
+            <div *ngFor="let i of ex_inputs">
+                <input type="text" class="input-field" id="{{i}}" [(ngModel)]="bandRequest.exmembers[ex_inputs.indexOf(i)]"><br>
+            </div><br>
+            <button class="add-button" (click)="add_input_text('ex')">+ Añadir</button><br>
         </div><br><br>
-        <button class="submit-button">Enviar</button>
+        <button class="submit-button" (click)="makeAndSendJson()">Enviar</button>
     </div>
 </div>

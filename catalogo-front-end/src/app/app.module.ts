@@ -8,6 +8,7 @@ import { CatalogDisplayComponent } from './catalog-display/catalog-display.compo
 import { CatalogItemComponent } from './catalog-item/catalog-item.component';
 import { BandDetailComponent } from './band-detail/band-detail.component';
 import { NewBandComponent } from './new-band/new-band.component';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -20,7 +21,8 @@ import { NewBandComponent } from './new-band/new-band.component';
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

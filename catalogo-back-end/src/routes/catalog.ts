@@ -2,7 +2,8 @@ import express from 'express';
 import { BandDetail } from '../interfaces/catalog';
 import { BandDetailRequestTemplate } from '../interfaces/requests';
 import { addBand, deleteBand, getAllGenres, getBandDetail, getBandList } from '../modules/catalog/catalog';
-import { fetchImageById, imageExists, uploadImage } from '../modules/catalog/images';
+import { fetchImageById, imageExists, uploadImage, isJPEG } from '../modules/catalog/images';
+import path from 'path';
 
 const router = express.Router();
 
@@ -30,14 +31,12 @@ router.get('/get-list', async (req, res) => {
     }
 });
 
-router.post('/get-images', (req, res) => {
-    let images: {[id: string]: string} = {};
+router.get('/get-image/:imgid', (req, res) => {
     try {
-        for (let i = 0; i < req.body.imageids.length; ++i) {
-            let imgid = req.body.imageids[i];
-            if(imageExists(imgid)) images[imgid] = fetchImageById(imgid).toString('base64');
-        }
-        res.status(200).send({"imageData": images});
+        if(imageExists(req.params.imgid))
+            res.status(200).sendFile(path.resolve(__dirname + '/../../db/images/' + req.params.imgid + '.jpg'));
+        else
+            res.status(400).send("image does not exist");    
     } catch (e) {
         console.log(e);
         res.status(500).send("error: check logs");
@@ -48,6 +47,16 @@ router.post('/get-images', (req, res) => {
 router.get('/get-detail/:bandid', async (req, res) => {
     try {
         let detail = await getBandDetail(parseInt(req.params.bandid));
+        let convertedvideos: string[] = [];
+        for(let i in detail.samplevids) {
+            let splitlink = detail.samplevids[i].split('/');
+            if(splitlink.includes('youtu.be')) {
+                convertedvideos.push('https://youtube.com/embed/' + splitlink[splitlink.length - 1]);
+            } else {
+                convertedvideos.push('https://youtube.com/embed/' + splitlink[splitlink.length - 1].split('=')[1]);
+            }
+        }
+        detail.samplevids = convertedvideos;
         res.status(200).send({bandDetail: detail})
     } catch (e) {
         console.log(e);
@@ -59,7 +68,12 @@ router.get('/get-detail/:bandid', async (req, res) => {
 router.post('/add-band', async (req, res) => {
     try {
         let bandSkeleton: BandDetailRequestTemplate = req.body.bandInfo;
-        let imgid: string = uploadImage(Buffer.from(bandSkeleton.imagedata, 'base64'));
+        let imgbuffer: Buffer = Buffer.from(bandSkeleton.imagedata, 'base64');
+        if(!isJPEG(imgbuffer)) {
+            res.status(400).send('Image is not JPEG');
+            return;
+        }
+        let imgid: string = uploadImage(imgbuffer);
         let bandDetail: BandDetail = {
             name: bandSkeleton.name,
             genres: bandSkeleton.genres,
