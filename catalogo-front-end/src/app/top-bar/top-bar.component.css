@@ -1,0 +1,11 @@
+.topbar {
+    background-color: #1976d2;
+    padding: 16px;
+}
+
+h1 {
+    margin: 0;
+    color: white;
+    font-size: 32px;
+    font-family: 'Roboto Thin', sans-serif;
+}

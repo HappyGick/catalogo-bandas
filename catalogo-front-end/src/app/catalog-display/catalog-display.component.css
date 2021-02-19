@@ -1,0 +1,32 @@
+.items {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.add-item {
+    border-radius: 10px;
+    flex: 1 0 250px;
+    margin: 10px;
+    box-sizing: border-box;
+    padding: 10px;
+    width: 250px;
+    height: 350px;
+    border: 3px;
+    border-color: gray;
+    border-style: dashed;
+    position: relative;
+    max-width: 250px;
+    transition: 0.2s;
+}
+
+.add-item:hover {
+    background-color: rgb(212, 212, 212);
+    cursor: pointer;
+}
+
+h2 {
+    text-align: center;
+    font-family: 'Roboto Regular', sans-serif;
+    color: gray;
+    margin-top: 50%;
+}
