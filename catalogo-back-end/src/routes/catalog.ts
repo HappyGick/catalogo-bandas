@@ -31,7 +31,7 @@ router.get('/get-list', async (req, res) => {
     }
 });
 
-router.get('/get-image/:imgid', (req, res) => {
+router.get('/get-image/:imgid', async (req, res) => {
     try {
         if(imageExists(req.params.imgid))
             res.status(200).sendFile(path.resolve(__dirname + '/../../db/images/' + req.params.imgid + '.jpg'));

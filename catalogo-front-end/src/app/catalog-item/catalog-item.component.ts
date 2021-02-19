@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-catalog-item',
@@ -7,10 +8,14 @@ import { Component, OnInit } from '@angular/core';
 })
 export class CatalogItemComponent implements OnInit {
 
-  constructor() { }
+  @Input() bandId: number = 1;
+  @Input() bandName: string = "";
+  @Input() bandImageLink: string = "";
 
-  test() {
-    window.alert("test");
+  constructor(public router: Router) { }
+
+  goToDetails() {
+    this.router.navigateByUrl('/band-detail/' + this.bandId);
   }
 
   ngOnInit(): void {

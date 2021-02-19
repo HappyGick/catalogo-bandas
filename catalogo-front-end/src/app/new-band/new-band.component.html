@@ -1,10 +1,14 @@
-<app-top-bar></app-top-bar>
 <h1 style="box-sizing: border-box; text-align: center;">Añadir nueva banda</h1><br>
 <div class="new-band-form-container">
     <div class="form-container-1">
         <div class="add-image" (click)="openImageFile()">
             <h3>Añadir imagen</h3>
             <input type="file" style="display:none" (change)="handle_image($event)" accept=".jpg,.jpeg">
+        </div>
+        <div class="back-button-container">
+            <button class="back-button" (click)="goBack()">
+                Atrás
+            </button>
         </div>
     </div>
     <div class="form-container-2">

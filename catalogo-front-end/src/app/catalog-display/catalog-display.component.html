@@ -1,13 +1,6 @@
-<app-top-bar></app-top-bar>
 <div class="items">
-  <app-catalog-item></app-catalog-item>
-  <app-catalog-item></app-catalog-item>
-  <app-catalog-item></app-catalog-item>
-  <app-catalog-item></app-catalog-item>
-  <app-catalog-item></app-catalog-item>
-  <app-catalog-item></app-catalog-item>
-  <app-catalog-item></app-catalog-item>
-  <div class="add-item">
+  <app-catalog-item *ngFor="let i of bandList" [bandName]="i.name" [bandImageLink]="i.imglink" [bandId]="i.id"></app-catalog-item>
+  <div class="add-item" (click)="navigateToAddBand()">
       <h2>Añadir banda</h2>
   </div>
 </div>

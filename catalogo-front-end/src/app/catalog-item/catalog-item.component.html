@@ -1,6 +1,6 @@
-<div class="catalog-item-card" (click)="test()">
+<div class="catalog-item-card" (click)="goToDetails()">
     <div class="image-container">
-        <img src="../../assets/test-images/1.jpg">
+        <img [src]="bandImageLink">
     </div>
-    <h3>Sample text</h3>
+    <h3>{{bandName}}</h3>
 </div>

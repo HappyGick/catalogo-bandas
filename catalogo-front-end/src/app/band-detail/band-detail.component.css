@@ -36,30 +36,6 @@
     max-height: 400px;
 }
 
-.back-button-container {
-    padding: 20px;
-    text-align: center;
-}
-
-.back-button {
-    background-color: #1976d2;
-    border: 0;
-    border-radius: 5px;
-    color: white;
-    font-family: 'Roboto Light', sans-serif;
-    font-size: 30px;
-    padding-top: 5px;
-    padding-bottom: 5px;
-    padding-right: 25px;
-    padding-left: 25px;
-    transition: 0.2s;
-}
-
-.back-button:hover {
-    cursor: pointer;
-    background-color: #104f8d;
-}
-
 .bold-text {
     font-family: 'Roboto Black', sans-serif;
 }

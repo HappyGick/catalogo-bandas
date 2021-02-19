@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { AddBandRequestTemplate } from '../interfaces';
 
 @Component({
@@ -34,9 +35,13 @@ export class NewBandComponent implements OnInit {
     imagedata: ""
   };
 
-  constructor() { }
+  constructor(public router: Router) { }
 
   ngOnInit(): void {
+  }
+
+  goBack() {
+    this.router.navigateByUrl('/main-page');
   }
 
   arrayBufferToBase64(buffer: ArrayBuffer) {
