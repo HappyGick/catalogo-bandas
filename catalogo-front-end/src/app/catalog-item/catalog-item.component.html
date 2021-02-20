@@ -1,6 +1,9 @@
-<div class="catalog-item-card" (click)="goToDetails()">
-    <div class="image-container">
+<div class="catalog-item-card">
+    <div class="image-container" (click)="goToDetails()">
         <img [src]="bandImageLink">
     </div>
-    <h3>{{bandName}}</h3>
+    <div class="title-container">
+        <button class="remove-button" (click)="removeItem(bandId)">Quitar</button>
+        <h3>{{bandName}}</h3>
+    </div>
 </div>

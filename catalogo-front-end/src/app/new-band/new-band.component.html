@@ -5,6 +5,7 @@
             <h3>Añadir imagen</h3>
             <input type="file" style="display:none" (change)="handle_image($event)" accept=".jpg,.jpeg">
         </div>
+        <h2 *ngIf="loaded_image" style="color: rgb(10, 143, 55);">Imagen cargada</h2>
         <div class="back-button-container">
             <button class="back-button" (click)="goBack()">
                 Atrás
@@ -19,7 +20,8 @@
             <div *ngFor="let i of genres_inputs">
                 <select class="input-field" id="{{i}}" [(ngModel)]="bandRequest.genres[genres_inputs.indexOf(i)]">
                     <option *ngFor="let j of genres_list" [value]="j">{{j}}</option>
-                </select><br>
+                </select>
+                <button class="remove-button" *ngIf="genres_inputs.indexOf(i) !== 0" (click)="remove_input_text('genres', genres_inputs.indexOf(i))">- Quitar</button><br>
             </div><br>
             <button class="add-button" (click)="add_input_text('genres')">+ Añadir</button><br>
         </div><br><br>
@@ -28,21 +30,24 @@
         <div class="members-field">
             <label for="input_4">Miembros: </label><br>
             <div *ngFor="let i of members_inputs">
-                <input type="text" class="input-field" id="{{i}}" [(ngModel)]="bandRequest.members[members_inputs.indexOf(i)]"><br>
+                <input type="text" class="input-field" id="{{i}}" [(ngModel)]="bandRequest.members[members_inputs.indexOf(i)]">
+                <button class="remove-button" *ngIf="members_inputs.indexOf(i) !== 0" (click)="remove_input_text('members', members_inputs.indexOf(i))">- Quitar</button><br>
             </div><br>
             <button class="add-button" (click)="add_input_text('members')">+ Añadir</button><br>
         </div><br><br>
         <div class="demo-field">
             <label for="input_5">Videos de demostración: </label><br>
             <div *ngFor="let i of demos_inputs">
-                <input type="text" class="input-field" id="{{i}}" [(ngModel)]="bandRequest.samplevids[demos_inputs.indexOf(i)]"><br>
+                <input type="text" class="input-field" id="{{i}}" [(ngModel)]="bandRequest.samplevids[demos_inputs.indexOf(i)]">
+                <button class="remove-button" *ngIf="demos_inputs.indexOf(i) !== 0" (click)="remove_input_text('demos', demos_inputs.indexOf(i))">- Quitar</button><br>
             </div><br>
             <button class="add-button" (click)="add_input_text('demos')">+ Añadir</button><br>
         </div><br><br>
         <div class="exmembers-field">
             <label for="input_6">Exmiembros: </label><br>
             <div *ngFor="let i of ex_inputs">
-                <input type="text" class="input-field" id="{{i}}" [(ngModel)]="bandRequest.exmembers[ex_inputs.indexOf(i)]"><br>
+                <input type="text" class="input-field" id="{{i}}" [(ngModel)]="bandRequest.exmembers[ex_inputs.indexOf(i)]">
+                <button class="remove-button" *ngIf="ex_inputs.indexOf(i) !== 0" (click)="remove_input_text('ex', ex_inputs.indexOf(i))">- Quitar</button><br>
             </div><br>
             <button class="add-button" (click)="add_input_text('ex')">+ Añadir</button><br>
         </div><br><br>

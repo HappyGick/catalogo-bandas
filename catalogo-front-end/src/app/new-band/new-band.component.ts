@@ -1,5 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { Subscription } from 'rxjs';
+import { ApiClientService } from '../api-client.service';
 import { AddBandRequestTemplate } from '../interfaces';
 
 @Component({
@@ -7,7 +9,10 @@ import { AddBandRequestTemplate } from '../interfaces';
   templateUrl: './new-band.component.html',
   styleUrls: ['./new-band.component.css']
 })
-export class NewBandComponent implements OnInit {
+export class NewBandComponent implements OnInit, OnDestroy {
+
+  genresObservable: Subscription = new Subscription;
+  sendObservable: Subscription | undefined;
 
   genres_input_ids = 1;
   members_input_ids = 1;
@@ -19,11 +24,9 @@ export class NewBandComponent implements OnInit {
   demos_inputs: string[] = ["input_demos_1"];
   ex_inputs: string[] = ["input_ex_1"];
 
-  genres_list: string[] = [
-    "a",
-    "b",
-    "c"
-  ]
+  genres_list: string[] = []
+
+  loaded_image: boolean = false;
 
   bandRequest: AddBandRequestTemplate = {
     name: "",
@@ -35,9 +38,21 @@ export class NewBandComponent implements OnInit {
     imagedata: ""
   };
 
-  constructor(public router: Router) { }
+  constructor(public router: Router, private apiclient: ApiClientService) { }
 
   ngOnInit(): void {
+    this.genresObservable = this.apiclient.getAllGenres().subscribe((data) => {
+      if(data.body) {
+        for(let i in data.body.genre_list) {
+          this.genres_list.push(data.body.genre_list[i]);
+        }
+      }
+    });
+  }
+
+  ngOnDestroy(): void {
+    this.genresObservable.unsubscribe();
+    if(this.sendObservable) this.sendObservable.unsubscribe();
   }
 
   goBack() {
@@ -62,6 +77,7 @@ export class NewBandComponent implements OnInit {
     let filereader = new FileReader();
     filereader.onload = (e) => {
       this.bandRequest.imagedata = this.arrayBufferToBase64(filereader.result as ArrayBuffer);
+      this.loaded_image = true;
     };
     filereader.readAsArrayBuffer(e.target.files[0]);
   }
@@ -91,8 +107,71 @@ export class NewBandComponent implements OnInit {
     }
   }
 
+  remove_input_text(type: string, id: number) {
+    switch(type) {
+      case 'genres':
+        this.bandRequest.genres.splice(id, 1);
+        this.genres_inputs.splice(id,1);
+        break;
+      case 'members':
+        this.bandRequest.members.splice(id,1);
+        this.members_inputs.splice(id,1);
+        break;
+      case 'demos':
+        this.bandRequest.samplevids.splice(id,1);
+        this.demos_inputs.splice(id,1);
+        break;
+      case 'ex':
+        this.bandRequest.exmembers.splice(id,1);
+        this.ex_inputs.splice(id,1);
+        break;
+    }
+  }
+
   makeAndSendJson() {
+    if(this.sendObservable) this.sendObservable.unsubscribe;
     console.log(this.bandRequest);
+
+    if(this.bandRequest.name === "") {
+      alert("'Nombre' no puede estar vacío.");
+      return;
+    }
+
+    if(this.bandRequest.active === "") {
+      alert("'Años activa' no puede estar vacío");
+    }
+
+    for (let i of this.bandRequest.genres) {
+      if(i === "") {
+        alert("La sección de géneros debe estar llena");
+      }
+    }
+
+    for (let i of this.bandRequest.exmembers) {
+      if(i === "") {
+        alert("La sección de exmiembros debe estar llena");
+      }
+    }
+
+    for (let i of this.bandRequest.members) {
+      if(i === "") {
+        alert("La sección de miembros debe estar llena");
+      }
+    }
+
+    for (let i of this.bandRequest.samplevids) {
+      if(i === "") {
+        alert("La sección de videos de demostración debe estar llena");
+      }
+    }
+
+    this.sendObservable = this.apiclient.addBand(this.bandRequest).subscribe((data) => {
+      if(!data.ok) {
+        alert("Error al enviar los datos. Revise los logs.");
+        return;
+      }
+      this.router.navigateByUrl('/main-page');
+    });
   }
 
 }

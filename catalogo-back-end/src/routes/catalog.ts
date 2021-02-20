@@ -68,12 +68,15 @@ router.get('/get-detail/:bandid', async (req, res) => {
 router.post('/add-band', async (req, res) => {
     try {
         let bandSkeleton: BandDetailRequestTemplate = req.body.bandInfo;
-        let imgbuffer: Buffer = Buffer.from(bandSkeleton.imagedata, 'base64');
-        if(!isJPEG(imgbuffer)) {
-            res.status(400).send('Image is not JPEG');
-            return;
+        let imgid: string = "";
+        if(bandSkeleton.imagedata !== "") {
+            let imgbuffer: Buffer = Buffer.from(bandSkeleton.imagedata, 'base64');
+            if(!isJPEG(imgbuffer)) {
+                res.status(400).send('Image is not JPEG');
+                return;
+            }
+            imgid = uploadImage(imgbuffer);
         }
-        let imgid: string = uploadImage(imgbuffer);
         let bandDetail: BandDetail = {
             name: bandSkeleton.name,
             genres: bandSkeleton.genres,
@@ -85,23 +88,17 @@ router.post('/add-band', async (req, res) => {
         };
         let fullBandDetail = await addBand(bandDetail);
 
-        res.status(200).send({
-            fullBandDetail,
-            imgdata: {
-                id: imgid,
-                contents: bandSkeleton.imagedata
-            }
-        });
+        res.status(200).send({status: "success"});
     } catch (e) {
         console.log(e);
         res.status(500).send("error: check logs");
     }
 });
 
-router.delete('/remove-band/:bandid', async (req, res) => {
+router.get('/remove-band/:bandid', async (req, res) => {
     try {
         await deleteBand(parseInt(req.params.bandid));
-        res.status(200).send("success");
+        res.status(200).send({status: "success"});
     } catch (e) {
         console.log(e);
         res.status(500).send("error: check logs");
