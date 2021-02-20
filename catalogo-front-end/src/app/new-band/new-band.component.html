@@ -1,3 +1,8 @@
+<div class="back-button-container">
+    <button class="back-button" (click)="goBack()">
+        Atrás
+    </button>
+</div>
 <h1 style="box-sizing: border-box; text-align: center;">Añadir nueva banda</h1><br>
 <div class="new-band-form-container">
     <div class="form-container-1">
@@ -6,11 +11,6 @@
             <input type="file" style="display:none" (change)="handle_image($event)" accept=".jpg,.jpeg">
         </div>
         <h2 *ngIf="loaded_image" style="color: rgb(10, 143, 55);">Imagen cargada</h2>
-        <div class="back-button-container">
-            <button class="back-button" (click)="goBack()">
-                Atrás
-            </button>
-        </div>
     </div>
     <div class="form-container-2">
         <label for="input_1">Nombre: </label><br>
